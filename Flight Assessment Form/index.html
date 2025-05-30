@@ -1,0 +1,1733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+
+    <title>Flight Assessment Examiner Report</title>
+    <style>
+        body {
+            font-family: poppins;
+        }
+        .borderHead {
+            border-bottom: 2px solid #fb7347;
+        }
+        
+
+input[type="checkbox"] {
+    appearance: none; /* Hides the default checkbox */
+    width: 25px;
+    height: 25px;
+    border: 1px solid #fb7347;
+    background-color: white;
+    display: inline-block;
+    cursor: pointer;
+    padding: none;
+    vertical-align: middle;
+}
+
+/* Checkbox checked state */
+input[type="checkbox"]:checked {
+    background-color: #ffffff;
+    position: relative;
+}
+
+/* Checkmark */
+input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    width: 15px;
+    height: 15px;
+    background-color: #fb7347;
+}
+/* Style the input fields */
+input[type="text"],
+input[type="number"],
+input[type="date"] {
+    border: none; /* Remove box */
+    border-bottom: 2px solid #fb7347; /* Orange underline */
+    outline: none; /* Remove focus highlight */
+    background: transparent; /* Transparent background */
+    padding: 5px; /* Adjust spacing */
+    font-size: 16px;
+    width: 100%; /* Full width */
+}
+
+/* Style when input is focused */
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus {
+    border-bottom: 2px solid #d35430; /* Darker orange on focus */
+}
+/* Style for dropdowns */
+select {
+    background-color: #f7f8f3; /* Light greyish background */
+    font-family: poppins;
+    border: none; /* Remove default border */
+    outline: none; /* Remove focus highlight */
+    padding: 5px;
+    font-size: 16px;
+    width: 100%; /* Fill the entire td */
+    box-sizing: border-box; /* Ensure it respects padding */
+    cursor: pointer;
+}
+
+select#EP {
+    background-color: red;
+    color: #ffffff;
+    font-family: poppins;
+    border: none;
+    outline: none;
+    padding: 5px;
+    font-size: 18px;
+    width: 100%; /* Fill the entire td */
+    box-sizing: border-box; /* Ensure it respects padding */
+    cursor: pointer;
+}
+
+select option {
+    background: #ffffff;
+    color: #404040;
+    padding: 10px;
+    font-size: 16px;
+}
+select option:checked {
+    background-color: #fb7347;
+    color: white;
+}
+
+        .faHead {
+            border-left: 5px solid #fb7347;
+            padding-left: 20px;
+            margin: auto;
+            width: fit-content;
+        }
+        .faHead h1 {
+            text-align: center;
+            margin-bottom: -20px;
+        }
+        h1 {
+            font-size: 20px;
+        }
+
+        table.head {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0px;
+            border: 2px solid #f7f8f3;
+        }
+        table.assess {
+            width: 100%;
+            border-collapse: collapse;
+            border: 2px solid #f7f8f3;
+        }
+        table.head th {
+            background-color: #fb7347;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            color: #ffffff;
+            background-color: #fb7347;
+            width: 100px;
+        }
+        tr {
+            background-color: #F7F8F3;
+        }
+
+        .button {
+            border: 2px solid #fb7347;
+            color: #fb7347;
+            background-color: #ffffff;
+            font-family: poppins;
+            padding: 16px 32px;
+            text-align: center;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+        .button:hover {
+            border: 2px solid #fb7347;
+            color: #ffffff;
+            background-color: #fb7347;
+            font-family: poppins;
+            padding: 16px 32px;
+            text-align: center;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+
+        #photoModule, #videoModule, #autoModule, #attiModule {
+            display: none;
+        }
+
+       .signature-img {
+         max-height: 50px;
+       }
+    </style>
+
+</head>
+<div class="borderHead"></div>
+<div class="faHead">
+<h1>Examiner Report V2.0</h1>
+<p><span style="font-size: 20px; margin-top: 20px;">Multi-Rotor UAS GVC Practical Flight Assessment</span><p>
+</div>
+<div class="borderHead"></div>
+<br>
+<body>
+    
+    <table class="head">
+        <tr class="head">
+            <th>Name</th>
+            <td><input type="text" name="name" style= "width: 95%"></td>
+            <th>ID</th>
+            <td><input type="checkbox" name="id"></td>
+            <th>UCN</th>
+            <td><input type="number" name="ucn" style="width: 95%"></td>
+        </tr>
+        <tr class="head">
+            <th>Date</th>
+            <td colspan="2"><input type="date" name="date" style="width: 50%;"></td>
+            <th>Location</th>
+            <td colspan="3"><input type="text" name="location" style="width: 97%;"></td>
+        </tr>
+        <tr class="head">
+            <th>Aircraft</th>
+            <td colspan="2">
+                </select><input type="text" name="aircraft" style="width: 95%">
+            </td>
+            <th>Flight Mode</th>
+            <td colspan="2">
+                <select id="flightMode" name="Mode" style="width: 100%;" onchange="flightModeSelect()">
+                    <option value="GPS">GPS</option>
+                    <option value="GPS+ATTI">GPS+ATTI</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+<br>
+<br>
+    <table class="assess">
+        <tr>
+            <th colspan="4" style="text-align: center; background-color: #404040;">Pre Flight</th>
+        <tr>
+            <th>Activity</th>
+            <th>Grade</th>
+            <th>Fault</th>
+            <th>Comment</th>
+        </tr>
+        <tr>
+            <th width="100">Site Survey</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100">Establish an Operating Site</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Fail">Fail</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100">Crew Briefing & Fitness for Duties</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100">Pre-flight Checks and Setup</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+    </table>
+
+    <table class="assess">
+        <tr>  
+            <th colspan="4" style="text-align: center; background-color: #404040;">In-Flight Procedures</th>
+        <tr>
+            <th>Activity</th>
+            <th>Grade</th>
+            <th>Fault</th>
+            <th>Comment</th>
+        </tr>
+        <tr>
+            <th width="100">Take-off</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100">RTH Failsafe Check</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Fail">Fail</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100">45° Ascent (In Orientation)</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Fail">Fail</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100">45° Descent (In Orientation)</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Fail">Fail</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100" style="background-color: red;">Emergency Procedure<br> Command Unit Fire</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Fail">Fail</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100">45° Ascent (Reverse Orientation)</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Fail">Fail</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100">45° Descent (Reverse Orientation)</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Fail">Fail</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100" style="background-color: red;">Emergency Procedure<br> Public Incursion</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Fail">Fail</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100">Take-off</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Fail">Fail</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100">Figure 8 (Left-Hand)</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Fail">Fail</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100">Figure 8 (Right-Hand)</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Fail">Fail</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100" style="background-color: red;">Emergency Procedure<br> Loss of Control</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Fail">Fail</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100">Re-Orientation</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Fail">Fail</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100" style="background-color: red;">Emergency Procedure<br> Aircraft Incursion</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Fail">Fail</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100">Landing</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+    </table>
+
+    <table class="assess" id="attiModule" style="display: none;">
+        <tr>
+            <th colspan="4" style="text-align: center; background-color: #404040;">In-Flight Procedures Non-GPS</th>
+        <tr>
+            <th>Activity</th>
+            <th>Grade</th>
+            <th>Fault</th>
+            <th>Comment</th>
+        </tr>
+        <tr>
+            <th width="100">Take-off</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Fail">Fail</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100" style="background-color: red;">Emergency Procedure<br> Loss of GPS</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Fail">Fail</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100">Hover</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Fail">Fail</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100">45° Ascent</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Fail">Fail</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100">Figure 8</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Fail">Fail</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100">45° Descent</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Fail">Fail</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100" style="background-color: red;">Emergency Procedure<br> Partial Propulsion Failure</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Fail">Fail</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100">Landing</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+    </table>
+
+    <table class="assess">
+        <tr>
+            <th colspan="4" style="text-align: center; background-color: #404040;">Post-Flight</th>
+        <tr>
+            <th>Activity</th>
+            <th>Grade</th>
+            <th>Fault</th>
+            <th>Comment</th>
+        </tr>
+        <tr>
+            <th width="100">Aircraft Safe</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Fail">Fail</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100">Post-Flight Inspection</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Pass with Minor Fault">Pass with Minor Fault</option>
+                <option value="Pass with Major Fault">Pass with Major Fault</option>
+                <option value="Fail">Fail</option>
+                <option value="Safety">Safety</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100">Post-Flight Disassembly</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Fail">Fail</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100">Logging of Details</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Fail">Fail</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+        <tr>
+            <th width="100">Knowledge of MORS</th>
+            <td><select name="grade" style="width: 100%;">
+                <option value="">Select</option>
+                <option value="Pass">Pass</option>
+                <option value="Fail">Fail</option>
+            </select></td>
+            <td><select name="fault" style="width: 100%;">
+                <option value="">Select</option>
+            </select></td>
+            <td><select name="comment" style="width: 100%;">
+                <option value="">Select</option>
+                
+            </select></td>
+        </tr>
+    </table>
+<br>
+
+<table class="assess">
+    <tr>
+        <th colspan="2" style="text-align: center; background-color: #404040;">Examiner Details</th>
+        <th colspan="5" style="text-align: center; background-color: #404040;">Results</th>
+    <tr>
+        <th>Examiner Name</th>
+        <th>Signature</th>
+        <th>Minor(s)</th>
+        <th>Major(s)</th>
+        <th>Safety(s)</th>
+        <th>Failed manoeuver(s)</th>
+        <th>Pass/ Fail</th>
+    </tr>
+    <tr>
+        <td><select name="examiner">
+            <option value="">Select</option>
+            <option value="Andrew">Andrew</option>
+            <option value="Bradley">Bradley</option>
+            <option value="Chris">Chris</option>
+            <option value="Jack">Jack</option>
+            <option value="Lois">Lois</option>
+            <option value="Odysseus">Odysseus</option>
+            <option value="Tom">Tom</option>
+        </select></td>
+        <td id="signature"></td>
+        <td width="10%" id="minors">0</td>
+        <td width="10%" id="majors">0</td>
+        <td width="10%" id="safety">0</td>
+        <td width="10%" id="fail">0</td>
+        <td width="10%" id="passFail">Pass</td>
+    </tr>
+</table>
+
+<br>
+<div class="faHead">
+<button class="button" onclick="generateStructuredPDF()">Export</button>
+<button class="button">Clear</button>
+</div>
+
+<script>
+function flightModeSelect() {
+    let flightMode = document.getElementById("flightMode").value;
+    let atti = document.getElementById("attiModule");
+    
+    if (flightMode === "GPS+ATTI") {
+        atti.style.display = "table";
+    } else {
+        atti.style.display = "none";
+    }
+}
+
+// Fault Library
+const faultLibrary = {
+  "Site Survey": {
+    "Pass with Minor Fault": ["Operating Site Diagram", "Onsite Observations"],
+    "Pass with Major Fault": ["NOTAM", "Weather", "Operating Site Diagram", "Onsite Observations", "Risk Assessment"],
+    "Safety": ["Site Survey"]
+  },
+  "Establish an Operating Site": {
+    "Pass with Minor Fault": ["Aircraft Assembly", "Equipment", "TOLA"],
+    "Pass with Major Fault": ["Aircraft Assembly", "Equipment", "TOLA"],
+    "Safety": ["Aircraft Assembly", "Equipment", "TOLA"]
+  },
+  "Crew Briefing & Fitness for Duties": {
+    "Pass with Minor Fault": ["Crew Brief"],
+    "Pass with Major Fault": ["Crew Brief"],
+    "Safety": ["Crew Brief"]
+  },
+  "Pre-flight Checks and Setup": {
+    "Pass with Minor Fault": ["Functional Checks"],
+    "Pass with Major Fault": ["Functional Checks"],
+    "Safety": ["Functional Checks"]
+  },
+  "Take-off": {
+    "Pass with Minor Fault": ["Flight Procedure", "Control", "Orientation"],
+    "Pass with Major Fault": ["Flight Procedure", "Control", "Orientation"],
+    "Fail": ["Flight Procedure"],
+    "Safety": ["Flight Procedure", "Control"]
+  },
+  "Landing": {
+    "Pass with Minor Fault": ["Flight Procedure", "Control", "Orientation", "Position"],
+    "Pass with Major Fault": ["Speed", "Control"],
+    "Safety": ["Control"]
+  },
+  "RTH Failsafe Check": {
+    "Pass with Minor Fault": ["Situational Awareness"],
+    "Pass with Major Fault": ["Flight Procedure"],
+    "Fail": ["Flight Procedure"]
+  },
+  "45° Ascent (In Orientation)": {
+    "Pass with Minor Fault": ["Accuracy", "Control", "Speed", "Hesitation", "VLOS", "Position", "Orientation", "Movement"],
+    "Pass with Major Fault": ["Accuracy", "Control", "Speed", "Hesitation", "VLOS", "Position", "Orientation"],
+    "Fail": ["Accuracy", "Control", "Speed", "Hesitation", "VLOS", "Position", "Orientation", "Movement"],
+    "Safety": ["Separation"]
+  },
+  "45° Descent (In Orientation)": {
+    "Pass with Minor Fault": ["Accuracy", "Control", "Speed", "Hesitation", "VLOS", "Position", "Orientation", "Movement"],
+    "Pass with Major Fault": ["Accuracy", "Control", "Speed", "Hesitation", "VLOS", "Position", "Orientation"],
+    "Fail": ["Accuracy", "Control", "Speed", "Hesitation", "VLOS", "Position", "Orientation", "Movement"],
+    "Safety": ["Separation"]
+  },
+  "Figure 8 (Left-Hand)": {
+    "Pass with Minor Fault": ["Accuracy", "Control", "Speed", "Hesitation", "VLOS", "Position", "Orientation", "Movement"],
+    "Pass with Major Fault": ["Accuracy", "Control", "Speed", "Hesitation", "VLOS", "Position", "Orientation"],
+    "Fail": ["Accuracy", "Control", "Speed", "Position", "Orientation", "Movement"],
+    "Safety": ["Control", "Speed", "Position"]
+  },
+  "Re-Orientation": {
+    "Pass with Minor Fault": ["Control", "Speed", "Hesitation", "VLOS", "Position", "Orientation"],
+    "Pass with Major Fault": ["Hesitation", "Orientation"],
+    "Fail": ["Accuracy", "Control", "Speed", "Hesitation", "VLOS", "Position", "Orientation", "Movement"],
+    "Safety": ["Separation", "VLOS"]
+  },
+  "Hover": {
+    "Pass with Minor Fault": ["Accuracy", "Control", "Position", "Separation"],
+    "Pass with Major Fault": ["Hesitation", "Orientation"],
+    "Fail": ["Accuracy", "Control", "Position"],
+    "Safety": ["Separation", "Control"]
+  },
+  "Aircraft Safe": {
+    "Pass with Minor Fault": ["Flight Procedure"],
+    "Pass with Major Fault": ["Flight Procedure"],
+    "Fail": ["Flight Procedure"],
+    "Safety": ["Flight Procedure"]
+  },
+  "Post-Flight Disassembly": {
+    "Fail": ["Flight Procedure"]
+  },
+  "Emergency Procedure Command Unit Fire": {
+    "Pass with Minor Fault": ["Flight Procedure"],
+    "Pass with Major Fault": ["Flight Procedure"],
+    "Fail": ["Flight Procedure"],
+    "Safety": ["Flight Procedure"]
+  },
+  "Emergency Procedure Public Incursion": {
+    "Pass with Minor Fault": ["Flight Procedure", "Control", "Speed", "Hesitation", "Orientation"],
+    "Pass with Major Fault": ["Flight Procedure", "Control", "Speed", "Hesitation", "Orientation"],
+    "Fail": ["Flight Procedure"],
+    "Safety": ["Flight Procedure"]
+  },
+  "Emergency Procedure Aircraft Incursion": {
+    "Pass with Minor Fault": ["Flight Procedure", "Control", "Speed", "Hesitation", "Orientation"],
+    "Pass with Major Fault": ["Flight Procedure", "Control", "Speed", "Hesitation", "Orientation"],
+    "Fail": ["Flight Procedure"],
+    "Safety": ["Flight Procedure"]
+  },
+  
+  // Add similar structure for other activities
+};
+
+// Comment Library
+const commentLibrary = {
+    "Site Survey": {
+    "Pass": {
+      "_": ["has done a good job at identifying risks and assessing site layout.", "is detailed and shows a good understanding of pre planning.", "Really good attempt and will continue to get better the more you do it."]
+    },
+    "Pass with Minor Fault": {
+      "Operating Site Diagram": ["Flight volume not defined", "No secondary TOLA", "No defined contingency Buffer"],
+      "Onsite Observations": ["Not detailed enough/ too basic", "Missing areas of Social Sensitivity"]
+    },
+    "Pass with Major Fault": {
+      "NOTAM": ["No NOTAM", "Missing PIB Number"],
+      "Weather": ["Not Checked", "Wrong Date", "Missing Information"],
+      "Operating Site Diagram": ["No Diagram", "Missing key elements"],
+      "Onsite Observations": ["No Observations listed"],
+      "Risk Assessment": ["Not Completed", "Missing one or all of the following: LiPo Battery Fire, Uncontrolled Decent & Propeller Cuts"]
+    },
+    "Safety": {
+      "Site Survey": ["Exceeded Op Envelope during Assessment", "No planning Document"]
+    }
+  },
+    "Establish an Operating Site": {
+    "Pass": {
+      "_": ["Established a well defined TOLA and Aircraft Assembled methodically", "All required equipment accounted for, Aircraft Assembled and TOLA well established", "Really good setup and will continue to improve with time"]
+    },
+    "Pass with Minor Fault": {
+      "Aircraft Assembly": ["Didn't check Batteries", "Didn't check Motors", "Didn't check Props", "Didn't check body/frame of UAS", "Didn't check Payload"],
+      "Equipment": ["Faulty Anemometer"],
+      "TOLA": ["Placement of Pad inside TOLA, not centered", "Used less than 4 cones resulting in not as clearly defined TOLA"]
+    },
+    "Pass with Major Fault": {
+      "Aircraft Assembly": ["Missed multiple assembly checks", "No Op-ID on UAS"],
+      "Equipment": ["No First Aid Kit", "No Fire Suppression", "No Cones", "No Landing Pad"],
+      "TOLA": ["Cones too close to Landing Pad"]
+    },
+    "Safety": {
+      "Aircraft Assembly": ["No Assembly conducted, simply setup UAS", "UAS was damaged and continued to setup"],
+      "Equipment": ["No Fire or First Aid Equipment", "No TOLA Equipment resulting in no clearly defined TOLA"],
+      "TOLA": ["FOD inside of TOLA", "No clearly defined TOLA"]
+    }
+  },
+    "Crew Briefing & Fitness for Duties": {
+    "Pass": {
+      "_": ["Detailed Briefing covering IMSAFE, SEEDS and RTH responsibilities", "Well thought out crew brief highlighting observer duties and safety issues", "Really good crew brief, highlighted all required areas and will continue to improve with time"]
+    },
+    "Pass with Minor Fault": {
+      "Crew Brief": ["Crew Brief covered most aspects of operation but needed more regarding safety", "Crew Brief covered most aspects of operation but needed more regarding exercise", "Crew Brief covered most aspects of operation but needed more regarding equipment", "Crew Brief covered most aspects of operation but needed more regarding crew responsibilities", "Crew Brief covered most aspects of operation but needed more regarding communication"],
+    },
+    "Pass with Major Fault": {
+      "Crew Brief": ["Didn't cover safety aspects of operation", "didn't explain exercise of operation", "Didn't cover any equipment to be used within operation", "Didn't highlight any crew responsibilities", "Didn't cover any communication methods", "Did not cover IMSAFE in full"],
+    },
+    "Safety": {
+      "Crew Brief": ["Did not cover any aspect of IMSAFE and therefore did not confirm fitness of crew", "Did not cover RTH familiarisation with crew"]
+    }
+  },
+    "Pre-flight Checks and Setup": {
+    "Pass": {
+      "_": ["All Functional checks completed in a methodical manor", "All aspects of functional checks covered", "Functional checks completed and adjustments made in according with operating environment"]
+    },
+    "Pass with Minor Fault": {
+      "Functional Checks": ["Functional checks completed but omitted certain elements that would benefit from checked or altered"],
+    },
+    "Pass with Major Fault": {
+      "Functional Checks": ["Didn't check sensor status and/or batteries", "HMS warning or cautions not inspected"],
+    },
+    "Safety": {
+      "Functional Checks": ["Did not do any functional checks or not enough to ensure safe flight"]
+    }
+  },
+    "Take-off": {
+    "Pass": {
+      "_": ["Performed take-off procedure in line with OM"]
+    },
+    "Pass with Minor Fault": {
+      "Flight Procedure": ["Safe take-off procedure completed but did not fully check surroundings", "Take-off procedure completed but did not perform start/stop motor check", "Take-off procedure completed with missed right stick response check", "Take-off procedure completed but did not ascend to 10m", "Take-off procedure completed but did not observe aircraft for 10 seconds before in flight stick checks"],
+      "Control": ["Yaw during ascent", "Ascent during yaw check (left stick check)"],
+      "Orientation": ["UAS not in correct orientation during take off procedure"]
+    },
+    "Pass with Major Fault": {
+      "Flight Procedure": ["Take-off procedure completed with two or more missed stages or checks"],
+      "Control": ["Left TOLA during stick checks"],
+      "Orientation": ["Left TOLA not in correct orientation"]
+    },
+    "Fail": {
+        "Flight Procedure": ["Could not complete manoeuver"]
+    },
+    "Safety": {
+      "Flight Procedure": ["No take-off procedure completed"],
+      "Control": ["Stick checks at around head height", "overflight of crew during stick checks"],
+    }
+  },
+    "Landing": {
+    "Pass": {
+      "_": ["Performed landing procedure in line with OM", "Excellent landing, steady and controlled", "Good landing, will improve with more practice"]
+    },
+    "Pass with Minor Fault": {
+      "Flight Procedure": ["Controlled landing but did not fully check surroundings before starting procedure"],
+      "Control": ["Yaw during descent", "Too much right stick movement while close to ground trying to line up with landing pad"],
+      "Orientation": ["UAS not in correct orientation during landing procedure"],
+      "Position": ["Landed drone off landing pad"]
+    },
+    "Pass with Major Fault": {
+      "Speed": ["Drone traveling too fast resulting in traveling beyond TOLA and over/ almost over crew"],
+      "Control": ["Significant movement of drone at low level while trying to land on take-off mat", "unstable height due to throttle trying to land on take-off mat"],
+    },
+    "Safety": {
+      "Control": ["Left TOLA while below head height", "overflight of crew while landing", "crashed drone into cones", "Crashed drone into landing pad pegs"]
+    }
+  },
+    "RTH Failsafe Check": {
+    "Pass": {
+      "_": ["Performed failsafe check in line with OM"]
+    },
+    "Pass with Minor Fault": {
+      "Situational Awareness": ["Did not check surroundings before initiating RTH"],
+    },
+    "Pass with Major Fault": {
+      "Flight Procedure": ["Performed check directly above TOLA"],
+    },
+    "Fail": {
+      "Flight Procedure": ["No RTH Check conducted"]
+    }
+  },
+    "45° Ascent (In Orientation)": {
+    "Pass": {
+      "_": ["Climb was stable, with consistent speed and correct angle maintained.", "Demonstrated confidence and control while maintaining a steady rate of climb.", "A confident and safe ascent with no issues noted, refining throttle input could make the manoeuver even smoother.", "A steady and safe ascent, consider fine-tuning stick control to enhance smoothness at the start of the climb."]
+    },
+    "Pass with Minor Fault": {
+      "Accuracy": ["The manoeuver was completed, but the final altitude exceeded the acceptable tolerance range by less than 1 meter"],
+      "Control": ["Inconsistent throttle management during the ascent.", "Forward or backwards lateral movement during the manoeuver less than 1 meter"],
+      "Speed": ["Speed control was not consistent throughout the climb, resulting in a minor deviation", "The aircraft accelerated too rapidly during the ascent"],
+      "VLOS": ["Pilot did not look at aircraft for duration of manoeuver"],
+      "Position": ["Distance traveled to complete the manoeuver was too excessive for altitude gained"],
+      "Orientation": ["Aircraft orientation changed during ascent due to imprecise stick input", "Aircraft in wrong orientation during manoeuver"],
+      "Movement": ["Flew drone in wrong direction"]
+    },
+    "Pass with Major Fault": {
+      "Accuracy": ["The manoeuver was completed, but the final altitude exceeded the acceptable tolerance range by more than 1 meter."],
+      "Control": ["Forward or backwards lateral movement during the manoeuver more than 1 meter."],
+      "Speed": ["The manoeuver was flown at an uncontrolled speed which has potential to be unsafe"],
+      "Hesitation": ["Aircraft became completely stationary during manoeuver before continuing to final position."],
+      "Position": ["Aircraft left flight volume during completion of manoeuver"]
+    },
+    "Fail": {
+      "Accuracy": ["Could not complete the manoeuver"],
+      "Control": ["Could not complete the manoeuver"],
+      "Speed": ["Could not complete the manoeuver"],
+      "Hesitation": ["Could not complete the manoeuver"],
+      "VLOS": ["Could not complete the manoeuver"],
+      "Position": ["Could not complete the manoeuver"],
+      "Orientation": ["Could not complete the manoeuver"],
+      "Movement": ["Could not complete the manoeuver"]
+    },
+    "Safety": {
+      "Separation": ["During process of manoeuver, aircraft did not maintain safe separation distance from Pilot, Crew or Third Party", "During process of manoeuver, aircraft flew too close to ground hazard"]
+    }
+  },
+    "45° Descent (In Orientation)": {
+    "Pass": {
+      "_": ["The descent was stable, with consistent speed and the correct angle maintained throughout.", "Demonstrated confidence and control while maintaining a steady rate of descent.", "A confident and safe descent with no issues noted, refining throttle input could make the manoeuver even smoother.", "A steady and safe descent, consider fine-tuning stick control to enhance smoothness at the start of the climb."]
+    },
+    "Pass with Minor Fault": {
+      "Accuracy": ["The manoeuver was completed, but the final altitude exceeded the acceptable tolerance range by less than 1 meter"],
+      "Control": ["Inconsistent throttle management during the descent.", "Forward or backwards lateral movement during the manoeuver less than 1 meter"],
+      "Speed": ["Speed control was not consistent throughout the descent, resulting in a minor deviation.", "The aircraft accelerated too rapidly during the descent."],
+      "VLOS": ["Pilot did not look at aircraft for duration of manoeuver."],
+      "Position": ["Distance traveled to complete the manoeuver was too excessive."],
+      "Orientation": ["Aircraft orientation changed during descent due to imprecise stick input.", "Aircraft in wrong orientation during manoeuver."],
+      "Movement": ["Flew drone in wrong direction"]
+    },
+    "Pass with Major Fault": {
+      "Accuracy": ["The manoeuver was completed, but the final altitude exceeded the acceptable tolerance range by more than 1 meter."],
+      "Control": ["Forward or backwards lateral movement during the manoeuver more than 1 meter."],
+      "Speed": ["The manoeuver was flown at an uncontrolled speed which has potential to be unsafe"],
+      "VLOS": ["Almost flew into hazard due to focusing on the CU screen"],
+      "Hesitation": ["Aircraft became completely stationary during manoeuver before continuing to final position."],
+      "Position": ["Aircraft left flight volume during completion of manoeuver"]
+    },
+    "Fail": {
+      "Accuracy": ["Could not complete the manoeuver"],
+      "Control": ["Could not complete the manoeuver"],
+      "Speed": ["Could not complete the manoeuver"],
+      "Hesitation": ["Could not complete the manoeuver"],
+      "VLOS": ["Could not complete the manoeuver"],
+      "Position": ["Could not complete the manoeuver"],
+      "Orientation": ["Could not complete the manoeuver"],
+      "Movement": ["Could not complete the manoeuver"]
+    },
+    "Safety": {
+      "Separation": ["During process of manoeuver, aircraft did not maintain safe separation distance from Pilot, Crew or Third Party", "During process of manoeuver, aircraft flew too close to ground hazard"]
+    }
+  },
+    "Figure 8 (Left-Hand)": {
+    "Pass": {
+      "_": ["Good figure of 8, maintained height and speed.", "Good control over aircraft during manoeuver.", "Excellent figure 8, nice and steady and controlled throughout with same sized circles.", "Good figure of 8, more practice will help with confidence."]
+    },
+    "Pass with Minor Fault": {
+      "Accuracy": ["Too wide on right circle.", "Too wide on left circle.", "Did not return to centre cone following first or second circle."],
+      "Control": ["Gained altitude during manoeuver.", "Lack of control leading to rolling the aircraft around part of manoeuver instead of flying nose forward."],
+      "Speed": ["Far too fast resulting in UAS not falling within target flight path."],
+      "Hesitation": ["Stopped UAS part way through flight and then continued."],
+      "VLOS": ["Too Long looking at screen instead of UAS during flight."],
+      "Position": ["Started manoeuver over wrong target cone."],
+      "Orientation": ["Incorrect orientation during manoeuver."],
+      "Movement": ["Incorrect direction of flight, went left instead of right."]
+    },
+    "Pass with Major Fault": {
+      "Accuracy": ["Did not complete manoeuver within coned markers"],
+      "Control": ["Inconsistent height during manoeuver and missed target cones.", "Lack of control leading to rolling the aircraft around most or all of manoeuver instead of flying nose forward."],
+      "Speed": ["The manoeuver was flown at an uncontrolled speed which has potential to be unsafe"],
+      "Hesitation": ["Aircraft became completely stationary during manoeuver before continuing to final position."],
+      "Position": ["Aircraft left flight volume during completion of manoeuver"]
+    },
+    "Fail": {
+      "Accuracy": ["Could not complete the manoeuver"],
+      "Control": ["Could not complete the manoeuver"],
+      "Speed": ["Could not complete the manoeuver"],
+      "Hesitation": ["Could not complete the manoeuver"],
+      "VLOS": ["Could not complete the manoeuver"],
+      "Position": ["Could not complete the manoeuver"],
+      "Orientation": ["Could not complete the manoeuver"],
+      "Movement": ["Could not complete the manoeuver"]
+    },
+    "Safety": {
+      "Control": ["Flew too close to ground with inconsistent altitude.", "During process of manoeuver, aircraft did not maintain safe separation distance from Pilot, Crew or Third Party", "During process of manoeuver, aircraft flew too close to ground hazard"],
+      "Speed": ["Too fast while in close proximity to hazard without signs of stopping."],
+      "Position": ["Flew too close to a hazard and did not take actions to avoid."]
+    }
+  },
+    "Re-Orientation": {
+    "Pass": {
+      "_": ["The manoeuver was completed accurately, with correct use of yaw to change orientation.", "The pilot remained aware of aircraft orientation and adjusted correctly without overcorrection.", "The exercise was completed well, a little more consistency in control input would enhance precision."]
+    },
+    "Pass with Minor Fault": {
+      "Control": ["Aircraft gained or lost altitude during petal method showing a lack of control."],
+      "Speed": ["Reverse orientation achieved but time taken was excessive."],
+      "Hesitation": ["Noticeable hesitation before initiating orientation changes."],
+      "VLOS": ["Pilot looked at CU to understand orientation of aircraft, (required to reattempt manoeuver)"],
+      "Position": ["The aircraft had to travel a significant horizontal distance for the pilot to identify the aircraft orientation.", "Movement resulting in UAS being significantly closer to pilot before being able to figure out orientation"],
+      "Orientation": ["Reverse orientation was achieved but aircraft angle was inaccurate by a few degrees."]
+    },
+    "Pass with Major Fault": {
+      "Hesitation": ["Significant hesitation during the exercise disrupted the flow of the manoeuver, affecting control and aircraft positioning."],
+      "Orientation": ["The pilot reoriented the aircraft incorrectly or in the wrong direction, showing a misunderstanding of aircraft heading."]
+    },
+    "Fail": {
+      "Accuracy": ["Could not complete the manoeuver"],
+      "Control": ["Could not complete the manoeuver"],
+      "Speed": ["Could not complete the manoeuver"],
+      "Hesitation": ["Could not complete the manoeuver"],
+      "VLOS": ["Could not complete the manoeuver"],
+      "Position": ["Could not complete the manoeuver"],
+      "Orientation": ["Could not complete the manoeuver"],
+      "Movement": ["Could not complete the manoeuver"]
+    },
+    "Safety": {
+      "Separation": ["During process of manoeuver, aircraft did not maintain safe separation distance from Pilot, Crew or Third Party."],
+      "VLOS": ["Pilot did not maintain VLOS throughout the manoeuver."]
+    }
+  },
+    "Hover": {
+    "Pass": {
+      "_": ["UAS was quickly under control and held in a nice hover.", "Couple adjustments required to gain control but was then in a nice hover.", "Despite winds, UAS was under control and hovered within target area.", "Hovered UAS at correct height and within tolerance of target but will benefit from more practice."]
+    },
+    "Pass with Minor Fault": {
+      "Accuracy": ["Aircraft did not stay within tolerance above pre-determined point (cone).", "Drone not at specified height during manoeuver"],
+      "Control": ["Drone moving sporadically in attempt to gain control.", "inputting incorrect stick movements during hover resulting in inconsistent hover"],
+      "Position": ["UAS not positioned far away enough for drift caused by wind to keep drone at safe distance", "Movement resulting in UAS being significantly closer to pilot and crew before being able to gain hover"]
+    },
+    "Pass with Major Fault": {
+      "Accuracy": ["UAS significantly further away from target once in hover and not returned."],
+      "Control": ["Significant drift before being able to gain hover.", "Significant and erratic movement while gaining hover"],
+      "Position": ["UAS almost overflew crew before gaining hover.", "UAS almost left flight volume before gaining hover"],
+    },
+    "Fail": {
+      "Accuracy": ["Could not complete the manoeuver"],
+      "Control": ["Could not complete the manoeuver"],
+      "Position": ["Could not complete the manoeuver"],
+    },
+    "Safety": {
+      "Separation": ["During process of manoeuver, aircraft did not maintain safe separation distance from Pilot, Crew or Third Party."],
+      "Control": ["Pilot could not gain control of aircraft.", "Drone would have drifted into hazard had instructor not taken control"]
+    }
+  },
+    "Aircraft Safe": {
+    "Pass": {
+      "_": ["The aircraft was made safe correctly and in line with standard procedures."]
+    },
+    "Pass with Minor Fault": {
+      "Flight Procedure": ["Pilot switched off CU before making aircraft safe.",]
+    },
+    "Pass with Major Fault": {
+      "Flight Procedure": ["Did not advise crew to remain outside the TOLA."]
+    },
+    "Fail": {
+      "Flight Procedure": ["Unable to make aircraft safe."]
+    },
+    "Safety": {
+      "Flight Procedure": ["Unable to make aircraft safe."]
+    }
+  },
+    "Post-Flight Inspection": {
+    "Pass": {
+      "_": ["The pilot conducted a complete and effective post-flight check of the aircraft."]
+    },
+    "Pass with Minor Fault": {
+      "Flight Procedure": ["Insufficient inspection of propellers.", "Insufficient inspection of motors.", "Insufficient inspection of airframe.", "Insufficient inspection of batteries.", "Insufficient inspection of ports.", "Insufficient inspection of gimble."]
+    },
+    "Pass with Major Fault": {
+      "Flight Procedure": ["Pilot missed more than one area of aircraft on inspection."]
+    },
+    "Fail": {
+      "Flight Procedure": ["No post flight inspection completed."]
+    },
+    "Safety": {
+      "Flight Procedure": ["No post flight inspection completed."]
+          }
+  },
+    "Post-Flight Disassembly": {
+    "Pass": {
+      "_": ["Aircraft was disassembled correctly and safely, following the appropriate post-flight procedure."]
+    },
+    "Fail": {
+      "Flight Procedure": ["Candidate was unable to disassemble aircraft safely"]
+          }
+  },
+    "Logging of Details": {
+    "Pass": {
+      "_": ["Pilot displayed sound knowledge of logging procedures, with all required details recorded as per operational standards."]
+    },
+    "Fail": {
+      "Flight Procedure": ["The pilot showed insufficient understanding of flight log requirements."]
+    }
+  },
+    "Knowledge of MORS": {
+    "Pass": {
+      "_": ["The pilot demonstrated good knowledge of occurrence reporting procedures and understood when a report is required."]
+    },
+    "Fail": {
+      "Flight Procedure": ["Pilot was unable to clearly identify what should be reported or outline the correct process."]
+    }
+  },
+    "Emergency Procedure Command Unit Fire": {
+    "Pass": {
+      "_": ["The pilot clearly and confidently explained the correct steps for handling the emergency scenario, demonstrating strong procedural knowledge."]
+    },
+    "Pass with Minor Fault": {
+      "Flight Procedure": ["The pilot was unable to recall no more than one step in the procedure."]
+    },
+    "Pass with Major Fault": {
+      "Flight Procedure": ["The pilot failed to recall multiple stages of the required procedure."]
+    },
+    "Fail": {
+      "Flight Procedure": ["The pilot was unable to clearly explain the correct steps for managing the emergency scenario."]
+    },
+    "Safety": {
+      "Flight Procedure": ["The pilot was unable to clearly explain the correct steps for managing the emergency scenario."]
+          }
+  },
+    "Emergency Procedure Public Incursion": {
+    "Pass": {
+      "_": ["Good judgement shown, aircraft was brought down in a controlled and timely manner in response."]
+    },
+    "Pass with Minor Fault": {
+      "Flight Procedure": ["No Shoulder check before commencing emergency landing procedure"],
+      "Control": ["Drone moving sporadically in attempt to gain control while landing.", "inputting incorrect stick movements during landing resulting in lack of control"],
+      "Speed": ["Very slow flight toward landing area and/or during landing procedure"],
+      "Hesitation": ["Slow to act/ make decision to land."],
+      "Orientation": ["Conducted emergency landing in reverse orientation", "Lost orientation of drone during manoeuver but regained control and landed"]
+    },
+    "Pass with Major Fault": {
+      "Flight Procedure": ["Landed drone without following any procedure."],
+      "Control": ["Significant movement of drone within TOLA at low level.", "Significant and erratic movement while landing", "Flew outside of TOLA at low level momentarily then landed within TOLA"],
+      "Position": ["UAS almost overflew crew before regaining control and moving back to TOLA."],
+      "Orientation": ["Lost orientation of drone during manoeuver and struggled to regain control before landing"]
+    },
+    "Fail": {
+      "Accuracy": ["Could not complete the manoeuver"],
+      "Control": ["Could not complete the manoeuver"],
+      "Position": ["Could not complete the manoeuver"]
+    },
+    "Safety": {
+      "Separation": ["During process of manoeuver, aircraft did not maintain safe separation distance from Pilot, Crew or Third Party."],
+      "Control": ["Landed outside wholly or partially of TOLA.", "Drone would have drifted into hazard had instructor not taken control"]
+    }
+  },
+    "Emergency Procedure Aircraft Incursion": {
+    "Pass": {
+      "_": ["Successfully avoided airspace hazard following required procedure."]
+    },
+    "Pass with Minor Fault": {
+      "Control": ["UAS only moved laterally and did not descend", "Slight yaw during descent"],
+      "position": ["Descended low enough to cause background masking"]
+    },
+    "Pass with Major Fault": {
+      "Control": ["Significant yaw during descent."],
+      "position": ["Descended low enough to cause background masking and in close proximity to the ground or obstacle"]
+    },
+    "Fail": {
+      "Accuracy": ["Could not complete the manoeuver"],
+      "Control": ["Could not complete the manoeuver"],
+      "Position": ["Could not complete the manoeuver"]
+    },
+    "Safety": {
+      "Hesitation": ["Did not react quickly enough to take avoiding action"],
+      "Movement": ["UAS moved in incorrect direction, towards hazard."],
+      "Control": ["Would have crashed into ground hazard had instructor not taken control"]
+    }
+  },
+    
+
+  // Add other activities
+};
+
+//Common Faults and Comments 
+faultLibrary["45° Ascent (Reverse Orientation)"] = faultLibrary["45° Ascent (In Orientation)"];
+commentLibrary["45° Ascent (Reverse Orientation)"] = commentLibrary["45° Ascent (In Orientation)"];
+faultLibrary["45° Descent (Reverse Orientation)"] = faultLibrary["45° Descent (In Orientation)"];
+commentLibrary["45° Descent (Reverse Orientation)"] = commentLibrary["45° Descent (In Orientation)"];
+faultLibrary["45° Ascent"] = faultLibrary["45° Ascent (In Orientation)"];
+commentLibrary["45° Ascent"] = commentLibrary["45° Ascent (In Orientation)"];
+faultLibrary["45° Descent"] = faultLibrary["45° Descent (In Orientation)"];
+commentLibrary["45° Descent"] = commentLibrary["45° Descent (In Orientation)"];
+faultLibrary["Figure 8 (Right-Hand)"] = faultLibrary["Figure 8 (Left-Hand)"];
+commentLibrary["Figure 8 (Right-Hand)"] = commentLibrary["Figure 8 (Left-Hand)"];
+faultLibrary["Figure 8"] = faultLibrary["Figure 8 (Left-Hand)"];
+commentLibrary["Figure 8"] = commentLibrary["Figure 8 (Left-Hand)"];
+faultLibrary["Post-Flight Inspection"] = faultLibrary["Aircraft Safe"];
+faultLibrary["Logging of Details"] = faultLibrary["Post-Flight Disassembly"];
+faultLibrary["Knowledge of MORS"] = faultLibrary["Post-Flight Disassembly"];
+faultLibrary["Emergency Procedure Loss of Control"] = faultLibrary["Emergency Procedure Command Unit Fire"];
+commentLibrary["Emergency Procedure Loss of Control"] = commentLibrary["Emergency Procedure Command Unit Fire"];
+faultLibrary["Emergency Procedure Loss of GPS"] = faultLibrary["Emergency Procedure Command Unit Fire"];
+commentLibrary["Emergency Procedure Loss of GPS"] = commentLibrary["Emergency Procedure Command Unit Fire"];
+faultLibrary["Emergency Procedure Partial Propulsion Failure"] = faultLibrary["Emergency Procedure Command Unit Fire"];
+commentLibrary["Emergency Procedure Partial Propulsion Failure"] = commentLibrary["Emergency Procedure Command Unit Fire"];
+
+
+ const passFail = (minors >= 7 || majors >= 3 || safety >= 1 || fail >= 1) ? "Fail" : "Pass";
+  document.getElementById("passFail").textContent = passFail;
+  function updateFaultCounts() {
+  let minors = 0, majors = 0, safety = 0, fail = 0;
+  const faultCount = {};
+
+  document.querySelectorAll('table.assess tr').forEach(row => {
+    const gradeSelect = row.querySelector('select[name="grade"]');
+    const faultSelect = row.querySelector('select[name="fault"]');
+
+    if (!gradeSelect || !faultSelect) return;
+
+    const grade = gradeSelect.value;
+    const fault = faultSelect.value.trim();
+
+    if (grade === "Pass with Minor Fault") {
+      minors++;
+      if (fault) {
+        faultCount[fault] = (faultCount[fault] || 0) + 1;
+      }
+    } else if (grade === "Pass with Major Fault") {
+      majors++;
+    } else if (grade === "Safety") {
+      safety++;
+    } else if (grade === "Fail") {
+      fail++;
+    }
+  });
+
+  // For every fault type, promote one major per 3 same minor faults
+  for (const fault in faultCount) {
+    const sameFaultCount = faultCount[fault];
+    majors += Math.floor(sameFaultCount / 3);
+  }
+
+  document.getElementById("minors").textContent = minors;
+  document.getElementById("majors").textContent = majors;
+  document.getElementById("safety").textContent = safety;
+  document.getElementById("fail").textContent = fail;
+
+  const result = (minors >= 7 || majors >= 3 || safety >= 1 || fail >= 1) ? "Fail" : "Pass";
+  document.getElementById("passFail").textContent = result;
+}
+
+
+function updateCommentOptions(row) {
+  const activity = row.querySelector('th')?.textContent.trim();
+  const grade = row.querySelector('select[name="grade"]')?.value;
+  const fault = row.querySelector('select[name="fault"]')?.value;
+  const commentSelect = row.querySelector('select[name="comment"]');
+
+  commentSelect.innerHTML = '<option value="">Select</option>';
+
+  let options = [];
+
+  if (grade === "Pass") {
+    options = commentLibrary?.[activity]?.[grade]?.["_"] || [];
+  } else {
+    options = commentLibrary?.[activity]?.[grade]?.[fault] || [];
+  }
+
+  if (options.length === 0) {
+    for (const key in commentLibrary) {
+      const activities = key.split(',').map(k => k.trim());
+      if (activities.includes(activity)) {
+        if (grade === "Pass") {
+          options = commentLibrary[key]?.[grade]?.["_"] || [];
+        } else {
+          options = commentLibrary[key]?.[grade]?.[fault] || [];
+        }
+        break;
+      }
+    }
+  }
+
+  options.forEach(opt => {
+    const o = document.createElement("option");
+    o.value = opt;
+    o.textContent = opt;
+    commentSelect.appendChild(o);
+  });
+}
+
+function handleGradeChange(row) {
+  const activity = row.querySelector('th')?.textContent.trim();
+  const grade = row.querySelector('select[name="grade"]')?.value;
+  const faultSelect = row.querySelector('select[name="fault"]');
+  const commentSelect = row.querySelector('select[name="comment"]');
+
+  updateFaultCounts();
+
+  // Clear existing options
+  faultSelect.innerHTML = '<option value="">Select</option>';
+
+  if (grade === "Pass") {
+    faultSelect.value = "";
+    faultSelect.disabled = true;
+  } else {
+    const faults = faultLibrary?.[activity]?.[grade] || [];
+    faults.forEach(fault => {
+      const option = document.createElement("option");
+      option.value = fault;
+      option.textContent = fault;
+      faultSelect.appendChild(option);
+    });
+    faultSelect.disabled = false;
+  }
+
+  commentSelect.disabled = false;
+  updateCommentOptions(row);
+}
+
+function attachListeners() {
+  document.querySelectorAll('tr').forEach(row => {
+    const gradeSelect = row.querySelector('select[name="grade"]');
+    const faultSelect = row.querySelector('select[name="fault"]');
+
+    if (gradeSelect && faultSelect) {
+      gradeSelect.addEventListener("change", () => handleGradeChange(row));
+      faultSelect.addEventListener("change", () => handleFaultChange(row));
+       handleFaultChange(row);
+        updateFaultCounts(); 
+    }
+    const commentSelect = row.querySelector('select[name="comment"]');
+if (commentSelect) {
+  commentSelect.addEventListener("change", () => updateFaultCounts());
+}
+
+  });
+}
+
+function handleFaultChange(row) {
+  updateCommentOptions(row);
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  attachListeners();
+});
+
+// Add signatures
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelector('select[name="examiner"]').addEventListener("change", function() {
+        const selected = this.value.toLowerCase();
+        const signatureCell = document.getElementById("signature");
+        if (selected) {
+            signatureCell.innerHTML = `<img src="signatures/${selected}.png" alt="${selected} signature" class="signature-img">`;
+        } else {
+            signatureCell.textContent = "";
+        }
+    });
+});
+
+
+//Export to PDF Script
+
+async function generateStructuredPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  // Title block styling
+  const leftMargin = 10;
+  const rightMargin = 200;
+  const titleStartY = 15;
+  const titleHeight = 15;
+
+  // Title text centered
+  doc.setFontSize(18);
+  doc.setFont("helvetica", "bold");
+  doc.text("Examiner Report V2.0", 105, titleStartY + 5, { align: "center" });
+
+  doc.setFontSize(14);
+  doc.text("Multi-Rotor UAS GVC Practical Flight Assessment", 105, titleStartY + 13, { align: "center" });
+
+  // Orange divider line (like HTML's `.borderHead`)
+  doc.setDrawColor("#fb7347");
+  doc.setLineWidth(1);
+  doc.line(leftMargin, titleStartY + 18, rightMargin, titleStartY + 18);
+
+
+  // Load Poppins font (Base64 or custom embedding not supported directly — browser must already have it)
+  doc.setFont("helvetica"); // substitute for now; use a custom build for real Poppins embedding
+
+  const name = document.querySelector('input[name="name"]').value || "Unnamed";
+  const rawDate = document.querySelector('input[name="date"]').value;
+const dateParts = rawDate.split("-");
+const date = dateParts.length === 3 ? `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}` : "";
+  const location = document.querySelector('input[name="location"]').value;
+  const aircraft = document.querySelector('input[name="aircraft"]').value;
+  const flightMode = document.querySelector('select[name="Mode"]').value;
+  const ucn = document.querySelector('input[name="ucn"]').value;
+  const id = document.querySelector('input[name="id"]').checked ? "Yes" : "No";
+
+  // Candidate Info Table
+   doc.autoTable({
+    head: [['Name', 'UCN', 'ID Presented', 'Date', 'Location', 'Aircraft', 'Flight Mode']],
+    body: [[name, ucn, id, date, location, aircraft, flightMode]],
+    startY: titleStartY + 22,
+    styles: { fontSize: 10, font: "helvetica" },
+    headStyles: { fillColor: "#fb7347", textColor: 255 },
+    alternateRowStyles: { fillColor: "#f7f8f3" },
+  });
+
+  function getTableData(section) {
+    const data = [];
+    let capture = false;
+    document.querySelectorAll("table.assess tr").forEach(row => {
+      const sectionHeader = row.querySelector("th[colspan]");
+      if (sectionHeader) {
+        capture = sectionHeader.textContent.includes(section);
+        return;
+      }
+      if (!capture) return;
+
+      const activity = row.querySelector("th")?.textContent?.trim();
+      const grade = row.querySelector('select[name="grade"]')?.value;
+      const fault = row.querySelector('select[name="fault"]')?.value;
+      if (activity && grade) {
+        data.push([activity, grade, fault || ""]);
+      }
+    });
+    return data;
+  }
+
+  function addStyledTable(title, data) {
+    if (data.length === 0) return;
+    doc.autoTable({
+      head: [[title + " Activity", "Grade", "Fault"]],
+      body: data,
+      startY: doc.lastAutoTable.finalY + 5,
+      styles: { fontSize: 10 },
+      headStyles: { fillColor: "#fb7347", textColor: 255 },
+      alternateRowStyles: { fillColor: "#f7f8f3" },
+    });
+  }
+
+  // Pre-flight, In-flight, Post-flight
+  addStyledTable("Pre-Flight", getTableData("Pre Flight"));
+  addStyledTable("In-Flight", getTableData("In-Flight Procedures"));
+  addStyledTable("Post-Flight", getTableData("Post-Flight"));
+
+  // Comments Section
+  const comments = [];
+  document.querySelectorAll("table.assess tr").forEach(row => {
+    const activity = row.querySelector("th")?.textContent?.trim();
+    const comment = row.querySelector('select[name="comment"]')?.value;
+    if (activity && comment) comments.push([activity, comment]);
+  });
+
+  if (comments.length) {
+    doc.autoTable({
+      head: [["Activity", "Comment"]],
+      body: comments,
+      startY: doc.lastAutoTable.finalY + 5,
+      styles: { fontSize: 10 },
+      headStyles: { fillColor: "#fb7347", textColor: 255 },
+      alternateRowStyles: { fillColor: "#f7f8f3" },
+    });
+  }
+
+  // Final Summary
+  const examiner = document.querySelector('select[name="examiner"]').value;
+  const minors = document.getElementById("minors").textContent;
+  const majors = document.getElementById("majors").textContent;
+  const safety = document.getElementById("safety").textContent;
+  const fail = document.getElementById("fail").textContent;
+  const passFail = document.getElementById("passFail").textContent;
+
+  doc.autoTable({
+    head: [['Examiner', 'Minors', 'Majors', 'Safety', 'Failed Manoeuver(s)', 'Result']],
+    body: [[examiner, minors, majors, safety, fail, passFail]],
+    startY: doc.lastAutoTable.finalY + 5,
+    styles: { fontSize: 10 },
+    headStyles: { fillColor: "#fb7347", textColor: 255 },
+    alternateRowStyles: { fillColor: "#f7f8f3" },
+  });
+if (examiner) {
+  const signaturePath = `signatures/${examiner.toLowerCase()}.png`;
+  try {
+    const signatureImg = await getBase64ImageFromUrl(signaturePath);
+
+    const sigY = doc.lastAutoTable.finalY + 8;
+    const sigX = 15;
+    const sigWidth = 50;
+    const sigHeight = 20;
+
+    doc.setFontSize(10);
+    doc.text("Signature:", sigX, sigY - 2);
+    doc.addImage(signatureImg, 'PNG', sigX, sigY, sigWidth, sigHeight);
+  } catch (err) {
+    console.warn("Signature image not loaded for PDF", err);
+  }
+}
+  doc.save(`${name}_Flight_Assessment_Report.pdf`);
+}
+
+function getBase64ImageFromUrl(url) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0);
+      const dataURL = canvas.toDataURL("image/png");
+      resolve(dataURL);
+    };
+    img.onerror = reject;
+    img.src = url;
+  });
+}
+
+</script>
+
+
+</body>
+</html>
