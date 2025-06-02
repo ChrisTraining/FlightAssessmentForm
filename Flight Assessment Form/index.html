@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#fb7347" />
+    <link rel="icon" href="icons/icon-192.png" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <script src="./libs/jspdf.umd.min.js"></script>
+    <script src="./libs/jspdf.plugin.autotable.min.js"></script>
+    <script src="./libs/html2pdf.bundle.min.js"></script>
+
 
 
     <title>Flight Assessment Examiner Report</title>
@@ -861,7 +867,7 @@ select option:checked {
 <br>
 <div class="faHead">
 <button class="button" onclick="generateStructuredPDF()">Export</button>
-<button class="button">Clear</button>
+<button class="button" onclick="clearAllData()">Clear</button>
 </div>
 
 <script>
@@ -1726,8 +1732,28 @@ function getBase64ImageFromUrl(url) {
   });
 }
 
+function clearAllData() {
+                localStorage.clear();
+                location.reload();
+            }
+
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker
+      .register("service-worker.js")
+      .then(() => console.log("Service Worker registered"))
+      .catch(error => console.error("Service Worker registration failed:", error));
+  }
 </script>
 
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js")
+      .then(() => console.log("Service Worker registered"))
+      .catch(err => console.error("Service Worker failed", err));
+  }
+</script>
 
 </body>
 </html>
